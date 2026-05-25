@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class ContactsService {
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
+  constructor(readonly prisma: PrismaService) {}
+
+  create(createContactDto: CreateContactDto, ownerId: string) {
+    return this.prisma.contact.create({
+      data: { ...createContactDto, ownerId },
+    });
   }
 
   findAll() {

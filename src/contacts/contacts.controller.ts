@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
@@ -16,8 +18,14 @@ export class ContactsController {
   constructor(private readonly contactsService: ContactsService) {}
 
   @Post()
-  create(@Body() createContactDto: CreateContactDto) {
-    return this.contactsService.create(createContactDto);
+  create(
+    @Body() createContactDto: CreateContactDto,
+    @Req() req: Request & { user: { id: string } },
+  ) {
+    // TODO: Implement AuthGuard
+    const userId = req.user?.id || '123';
+
+    return this.contactsService.create(createContactDto, userId);
   }
 
   @Get()
