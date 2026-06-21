@@ -11,10 +11,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       connectionString: process.env.DATABASE_URL,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const adapter = new PrismaPg(pool);
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     super({ adapter });
   }
 

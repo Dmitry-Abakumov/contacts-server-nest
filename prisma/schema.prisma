@@ -28,7 +28,7 @@ model User {
   token             String?
   avatarURL         String
   verify            Boolean      @default(false)
-  verificationToken String
+  verificationToken String       @default(uuid())
   
   contacts          Contact[]   
   
